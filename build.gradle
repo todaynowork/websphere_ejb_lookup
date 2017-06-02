@@ -23,6 +23,7 @@ repositories {
 
 
 dependencies {
+	compile('org.hibernate:hibernate-validator:5.4.1.Final')
 	compile files('libs/com.ibm.ws.ejb.thinclient_8.5.0.jar')
 //	compile files('libs/com.ibm.ws.orb_8.5.0.jar')
     compile files('libs/mboejb.jar')

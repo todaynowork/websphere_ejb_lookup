@@ -1,7 +1,9 @@
 package com.my.springdemo;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import psdi.security.ejb.AccessTokenProviderHomeRemote;
 import psdi.security.ejb.AccessTokenProviderRemote;
 
@@ -11,28 +13,17 @@ import javax.rmi.PortableRemoteObject;
 import java.util.Hashtable;
 
 //@ImportResource("classpath:ejbs.xml")
-@SpringBootApplication
+//@SpringBootApplication
+@Configuration
+@ComponentScan
 public class SpringdemoApplication  implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		//SpringApplication.run(SpringdemoApplication.class, args);
+		SpringApplication.run(SpringdemoApplication.class, args);
 
 
 
-        try{
-            Hashtable env = new Hashtable();
-            env.put("org.omg.CORBA.ORBClass", "com.ibm.CORBA.iiop.ORB");
-            env.put("java.naming.factory.initial", "com.ibm.websphere.naming.WsnInitialContextFactory");
-            env.put("java.naming.provider.url", "iiop://cnwbzp1177.cn.dst.ibm.com:2810");
-            Context ctx = new InitialContext(env);
-//            Object obj = ctx.lookup("ejb/maximo/remote/accesstokenprovider"); can not contain forward splash
-            Object obj = ctx.lookup("syncMaximoDataService");
-            AccessTokenProviderHomeRemote home = (AccessTokenProviderHomeRemote) PortableRemoteObject.narrow(obj, AccessTokenProviderHomeRemote.class);
-            AccessTokenProviderRemote bean = home.create();
-            System.out.println("EJB Output -> " + bean.getBindingName());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+
 
 
 
@@ -80,19 +71,22 @@ public class SpringdemoApplication  implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("hello");
-//                try{
-//            Hashtable env = new Hashtable();
-//            env.put("org.omg.CORBA.ORBClass", "com.ibm.CORBA.iiop.ORB");
-//            env.put("java.naming.factory.initial", "com.ibm.websphere.naming.WsnInitialContextFactory");
-//            env.put("java.naming.provider.url", "iiop://cnwbzp1177.cn.dst.ibm.com:2810");
-//            Context ctx = new InitialContext(env);
-//            Object obj = ctx.lookup("ejb/maximo/remote/accesstokenprovider");
-//            AccessTokenProviderHomeRemote home = (AccessTokenProviderHomeRemote) PortableRemoteObject.narrow(obj, AccessTokenProviderHomeRemote.class);
-//            AccessTokenProviderRemote bean = home.create();
-//            System.out.println("EJB Output -> " + bean.getBindingName());
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
+        try{
+            Hashtable env = new Hashtable();
+            env.put("org.omg.CORBA.ORBClass", "com.ibm.CORBA.iiop.ORB");
+            env.put("java.naming.factory.initial", "com.ibm.websphere.naming.WsnInitialContextFactory");
+            env.put("java.naming.provider.url", "iiop://cnwbzp1177.cn.dst.ibm.com:2810");
+            Context ctx = new InitialContext(env);
+//            Object obj = ctx.lookup("ejb/maximo/remote/accesstokenprovider"); can not contain forward splash
+//            Object obj = ctx.lookup("java:global/tw_esolution/mboejb/accesstokenprovider!psdi.security.ejb.AccessTokenProviderHomeRemote");
+            Object obj = ctx.lookup("syncMaximoDataService");
+
+            AccessTokenProviderHomeRemote home = (AccessTokenProviderHomeRemote) PortableRemoteObject.narrow(obj, AccessTokenProviderHomeRemote.class);
+            AccessTokenProviderRemote bean = home.create();
+            System.out.println("EJB Output -> " + bean.getBindingName());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 //    @Bean

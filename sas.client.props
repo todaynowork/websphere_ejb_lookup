@@ -113,7 +113,7 @@ com.ibm.CORBA.validateBasicAuth=true
 com.ibm.CORBA.securityServerHost=
 com.ibm.CORBA.securityServerPort=
 com.ibm.CORBA.loginTimeout=300
-com.ibm.CORBA.loginSource=prompt
+com.ibm.CORBA.loginSource=properties
 
 # RMI/IIOP user identity
 com.ibm.CORBA.loginUserid=wasadmin
